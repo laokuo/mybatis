@@ -3,7 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.damu.entity.Users">
-    <select id="selectUsers" resultType="com.damu.entity.Users">
-    select * from Users
-  </select>
+    <select id="selectUsers" parameterType="int" resultMap="forUsers">
+        select * from Users where id = #{id}
+    </select>
+
+    <select id="selectAllUsers" parameterType="com.damu.entity.Users" resultMap="forUsers">
+        select * from users
+    </select>
+
+    <insert id="insertUsers" parameterType="com.damu.entity.Users">
+        insert into users(<include refid="Usersfield"></include>) values (#{id},#{name})
+    </insert>
+
+    <delete id="deleteUsers" parameterType="int">
+        delete from Users where id = #{id}
+    </delete>
+
+    <update id="updateUsers" parameterType="com.damu.entity.Users">
+        update users
+<!--        set username =#{name} where id =#{id}-->
+<!--        动态sql,这个例子不太好-->
+        <set>
+            <if test="name != null">username = #{name}</if>
+        </set>
+        where id =#{id}
+    </update>
+
+<!--    重用字段-->
+    <sql id="Usersfield" >
+        id,username
+    </sql>
+
+<!--当对象和数据库不一致的时候进行配置-->
+    <resultMap id="forUsers" type="com.damu.entity.Users">
+        <result column="username" property="name"></result>
+    </resultMap>
 </mapper>

@@ -7,16 +7,16 @@ public class Users {
     public Users() {
     }
 
-    public Users(int id, String name) {
+    public Users(int id, String username) {
         this.id = id;
-        this.name = name;
+        this.name = username;
     }
 
     @Override
     public String toString() {
         return "Users{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + name + '\'' +
                 '}';
     }
 
@@ -32,7 +32,7 @@ public class Users {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.name = username;
     }
 }
